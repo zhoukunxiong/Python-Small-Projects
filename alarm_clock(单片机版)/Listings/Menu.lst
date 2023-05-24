@@ -1,0 +1,87 @@
+C51 COMPILER V9.57.0.0   MENU                                                              05/24/2023 15:11:33 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE MENU
+OBJECT MODULE PLACED IN .\Objects\Menu.obj
+COMPILER INVOKED BY: D:\Software\Keil_v5\C51\BIN\C51.EXE Menu.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\Menu.lst) TABS(2) OBJECT(.\Objects\Menu.obj)
+
+line level    source
+
+   1          #include "LCD.h"
+   2          #include "GlobalVariable.h"
+   3          
+   4          /**********************************************************************
+   5          函数名：time_determine
+   6          功能：  判断时间位数并显示
+   7          参数：  columns：显示列，time：时间
+   8          返回值：无
+   9          **********************************************************************/
+  10          void time_determine(unsigned char columns,unsigned char time)
+  11          {
+  12   1        if(time>9){LCD_ShowNumber(2,columns,time,2);}
+  13   1        else{LCD_ShowNumber(2,columns,0,1);LCD_ShowNumber(2,columns+1,time,1);}
+  14   1      }
+  15          
+  16          /**********************************************************************
+  17          函数名：show_time
+  18          功能：  LCD1602液晶显示时间
+  19          参数：  hour：时，minute：分，second：秒
+  20          返回值：无
+  21          **********************************************************************/
+  22          void show_time(unsigned char hour,unsigned char minute,unsigned char second)
+  23          {
+  24   1        // 显示时
+  25   1        time_determine(1,hour);
+  26   1        // 显示分隔符
+  27   1        LCD_ShowChar(2,3,':');
+  28   1        // 显示分
+  29   1        time_determine(4,minute);
+  30   1        // 显示分隔符
+  31   1        LCD_ShowChar(2,6,':');
+  32   1        // 显示秒
+  33   1        time_determine(7,second);
+  34   1      }
+  35          
+  36          /**********************************************************************
+  37          函数名： Show_Menu
+  38          功能：   显示菜单
+  39          参数：   无
+  40          返回值： 无
+  41          **********************************************************************/
+  42          void Show_Menu(void)
+  43          {
+  44   1        // 界面1
+  45   1        if(menu==1)
+  46   1        {
+  47   2          // 界面信息
+  48   2          LCD_ShowString(1,1,"system time:");
+  49   2          // 显示时间
+  50   2          show_time(system_H,system_M,system_S);
+  51   2        }
+  52   1        // 界面2
+  53   1        else if(menu==2)
+  54   1        {
+C51 COMPILER V9.57.0.0   MENU                                                              05/24/2023 15:11:33 PAGE 2   
+
+  55   2          // 界面信息
+  56   2          LCD_ShowString(1,1,"alarm clock:");
+  57   2          // 显示时间
+  58   2          show_time(alarm_H,alarm_M,alarm_S);
+  59   2        } 
+  60   1      }
+  61          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    151    ----
+   CONSTANT SIZE    =     26    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,14 @@
+".\Objects\main.obj",
+".\Objects\getKeyNum.obj",
+".\Objects\LCD.obj",
+".\Objects\MatrixKeyboard.obj",
+".\Objects\Menu.obj",
+".\Objects\GlobalVariable.obj",
+".\Objects\PageTurn.obj",
+".\Objects\Time.obj",
+".\Objects\SetUp.obj",
+".\Objects\AlarmClock.obj",
+".\Objects\Delay.obj",
+".\Objects\Delay500us.obj" 
+TO ".\Objects\Project" 
+PRINT(".\Listings\Project.m51") RAMSIZE(256) 

@@ -1,0 +1,42 @@
+C51 COMPILER V9.57.0.0   PAGETURN                                                          05/24/2023 15:11:33 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE PAGETURN
+OBJECT MODULE PLACED IN .\Objects\PageTurn.obj
+COMPILER INVOKED BY: D:\Software\Keil_v5\C51\BIN\C51.EXE PageTurn.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -Listings\PageTurn.lst) TABS(2) OBJECT(.\Objects\PageTurn.obj)
+
+line level    source
+
+   1          #include "getKeyNum.h"
+   2          #include "GlobalVariable.h"
+   3          
+   4          /**********************************************************************
+   5          函数名：page_turn
+   6          功能：菜单界面翻页
+   7          参数：无
+   8          返回值：无
+   9          **********************************************************************/
+  10          void page_turn(void)
+  11          {
+  12   1        // 获取按键值
+  13   1        Key_Number=getKeyNum();
+  14   1        // 左右翻页
+  15   1        if(Key_Number==3){menu-=1;Key_Number=0;}else if(Key_Number==4){menu+=1;Key_Number=0;}
+  16   1        // 使页面能循环
+  17   1        if(menu==0){menu=2;}else if(menu==3){menu=1;}
+  18   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     41    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

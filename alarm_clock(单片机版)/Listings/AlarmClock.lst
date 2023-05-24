@@ -1,0 +1,47 @@
+C51 COMPILER V9.57.0.0   ALARMCLOCK                                                        05/24/2023 15:11:34 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE ALARMCLOCK
+OBJECT MODULE PLACED IN .\Objects\AlarmClock.obj
+COMPILER INVOKED BY: D:\Software\Keil_v5\C51\BIN\C51.EXE AlarmClock.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Listings\AlarmClock.lst) TABS(2) OBJECT(.\Objects\AlarmClock.obj)
+
+line level    source
+
+   1          #include "GlobalVariable.h"
+   2          #include <REGX52.H>
+   3          #include "Menu.h"
+   4          
+   5          /****************************************************************************************************
+   6          函数名：alarm_clock
+   7          功能：闹钟响1分钟
+   8          参数：无
+   9          返回值：无
+  10          ****************************************************************************************************/
+  11          void alarm_clock(void)
+  12          {
+  13   1        if((system_H==alarm_H)&&(system_M==alarm_M)&&(system_S==alarm_S))
+  14   1        {
+  15   2          while(1)
+  16   2          {
+  17   3            P1_5=~P1_5;
+  18   3            if(system_M==(alarm_M+1))
+  19   3              break;
+  20   3            else show_time(system_H,system_M,system_S);
+  21   3          }
+  22   2        }
+  23   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     48    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

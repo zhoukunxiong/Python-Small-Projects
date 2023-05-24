@@ -1,0 +1,385 @@
+C51 COMPILER V9.57.0.0   SETUP                                                             05/24/2023 15:26:04 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE SETUP
+OBJECT MODULE PLACED IN .\Objects\SetUp.obj
+COMPILER INVOKED BY: D:\Software\Keil_v5\C51\BIN\C51.EXE SetUp.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\SetUp.lst) TABS(2) OBJECT(.\Objects\SetUp.obj)
+
+line level    source
+
+   1          #include "LCD.h"
+   2          #include "Menu.h"
+   3          #include "getKeyNum.h"
+   4          #include "MatrixKeyboard.h"
+   5          #include "GlobalVariable.h"
+   6          
+   7          /**********************************************************************
+   8          函数名：set_system_time
+   9          功能：设置系统时间
+  10          参数：t1：时高位，t2：时低位，t3：分高位，t4：分低位，t5：秒高位，t6：秒低位
+  11          返回值：无
+  12          **********************************************************************/
+  13          void set_system_time(unsigned char t1, unsigned char t2, unsigned char t3, unsigned char t4, unsigned char
+             - t5, unsigned char t6)
+  14          {
+  15   1        system_H = t1 * 10 + t2;
+  16   1        system_M = t3 * 10 + t4;
+  17   1        system_S = t5 * 10 + t6;
+  18   1        show_time(system_H, system_M, system_S);
+  19   1      }
+  20          
+  21          /**********************************************************************
+  22          函数名：set_alarm_clock_time
+  23          功能：设置闹钟时间
+  24          参数：t1：时高位，t2：时低位，t3：分高位，t4：分低位，t5：秒高位，t6：秒低位
+  25          返回值：无
+  26          **********************************************************************/
+  27          void set_alarm_clock_time(unsigned char t1, unsigned char t2, unsigned char t3, unsigned char t4, unsigned
+             - char t5, unsigned char t6)
+  28          {
+  29   1        alarm_H = t1 * 10 + t2;
+  30   1        alarm_M = t3 * 10 + t4;
+  31   1        alarm_S = t5 * 10 + t6;
+  32   1        show_time(alarm_H, alarm_M, alarm_S);
+  33   1      }
+  34          
+  35          /**********************************************************************
+  36          函数名：set_up
+  37          功能：进入设置模式
+  38          参数：无
+  39          返回值：无
+  40          **********************************************************************/
+  41          void set_up(void)
+  42          {
+  43   1        // 记录光标位置
+  44   1        unsigned char move = 1;
+  45   1      
+  46   1        // 按下矩阵键盘1键进入设置模式
+  47   1        if (getMatrixKeyboardNum() == 1)
+  48   1        {
+  49   2          // 初始化光标位置
+  50   2          LCD_WriteCommand(0XC0);
+  51   2          // 显示光标并闪烁
+  52   2          LCD_WriteCommand(0X0F);
+C51 COMPILER V9.57.0.0   SETUP                                                             05/24/2023 15:26:04 PAGE 2   
+
+  53   2      
+  54   2          while (1)
+  55   2          {
+  56   3            Key_Number = getKeyNum();
+  57   3            // 值增加
+  58   3            if (Key_Number == 1)
+  59   3            {
+  60   4              if (menu == 1)
+  61   4              {
+  62   5                H_L = system_H % 10;
+  63   5                H_H = system_H / 10;
+  64   5                M_L = system_M % 10;
+  65   5                M_H = system_M / 10;
+  66   5                S_L = system_S % 10;
+  67   5                S_H = system_S / 10;
+  68   5                if (move == 1)
+  69   5                {
+  70   6                  H_H++;
+  71   6                  if (H_H == 3)
+  72   6                    H_H = 0;
+  73   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+  74   6                  // 设置光标位置
+  75   6                  LCD_WriteCommand(0XC0);
+  76   6                }
+  77   5                if (move == 2)
+  78   5                {
+  79   6                  H_L++;
+  80   6                  if (H_L == 4)
+  81   6                    H_L = 0;
+  82   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+  83   6                  // 设置光标位置
+  84   6                  LCD_WriteCommand(0XC1);
+  85   6                }
+  86   5                if (move == 4)
+  87   5                {
+  88   6                  M_H++;
+  89   6                  if (M_H == 6)
+  90   6                    M_H = 0;
+  91   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+  92   6                  // 设置光标位置
+  93   6                  LCD_WriteCommand(0XC3);
+  94   6                }
+  95   5                if (move == 5)
+  96   5                {
+  97   6                  M_L++;
+  98   6                  if (M_L == 10)
+  99   6                    M_L = 0;
+ 100   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 101   6                  // 设置光标位置
+ 102   6                  LCD_WriteCommand(0XC4);
+ 103   6                }
+ 104   5                if (move == 7)
+ 105   5                {
+ 106   6                  S_H++;
+ 107   6                  if (S_H == 6)
+ 108   6                    S_H = 0;
+ 109   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 110   6                  // 设置光标位置
+ 111   6                  LCD_WriteCommand(0XC6);
+ 112   6                }
+ 113   5                if (move == 8)
+ 114   5                {
+C51 COMPILER V9.57.0.0   SETUP                                                             05/24/2023 15:26:04 PAGE 3   
+
+ 115   6                  S_L++;
+ 116   6                  if (S_L == 10)
+ 117   6                    S_L = 0;
+ 118   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 119   6                  // 设置光标位置
+ 120   6                  LCD_WriteCommand(0XC7);
+ 121   6                }
+ 122   5              }
+ 123   4              else if (menu == 2)
+ 124   4              {
+ 125   5                H_L = alarm_H % 10;
+ 126   5                H_H = alarm_H / 10;
+ 127   5                M_L = alarm_M % 10;
+ 128   5                M_H = alarm_M / 10;
+ 129   5                S_L = alarm_S % 10;
+ 130   5                S_H = alarm_S / 10;
+ 131   5      
+ 132   5                if (move == 1)
+ 133   5                {
+ 134   6                  H_H++;
+ 135   6                  if (H_H == 3)
+ 136   6                    H_H = 0;
+ 137   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 138   6                  // 设置光标位置
+ 139   6                  LCD_WriteCommand(0XC0);
+ 140   6                }
+ 141   5                if (move == 2)
+ 142   5                {
+ 143   6                  H_L++;
+ 144   6                  if (H_L == 5)
+ 145   6                    H_L = 0;
+ 146   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 147   6                  // 设置光标位置
+ 148   6                  LCD_WriteCommand(0XC1);
+ 149   6                }
+ 150   5                if (move == 4)
+ 151   5                {
+ 152   6                  M_H++;
+ 153   6                  if (M_H == 7)
+ 154   6                    M_H = 0;
+ 155   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 156   6                  // 设置光标位置
+ 157   6                  LCD_WriteCommand(0XC3);
+ 158   6                }
+ 159   5                if (move == 5)
+ 160   5                {
+ 161   6                  M_L++;
+ 162   6                  if (M_L == 10)
+ 163   6                    M_L = 0;
+ 164   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 165   6                  // 设置光标位置
+ 166   6                  LCD_WriteCommand(0XC4);
+ 167   6                }
+ 168   5                if (move == 7)
+ 169   5                {
+ 170   6                  S_H++;
+ 171   6                  if (S_H == 7)
+ 172   6                    S_H = 0;
+ 173   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 174   6                  // 设置光标位置
+ 175   6                  LCD_WriteCommand(0XC6);
+ 176   6                }
+C51 COMPILER V9.57.0.0   SETUP                                                             05/24/2023 15:26:04 PAGE 4   
+
+ 177   5                if (move == 8)
+ 178   5                {
+ 179   6                  S_L++;
+ 180   6                  if (S_L == 10)
+ 181   6                    S_L = 0;
+ 182   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 183   6                  // 设置光标位置
+ 184   6                  LCD_WriteCommand(0XC7);
+ 185   6                }
+ 186   5              }
+ 187   4            }
+ 188   3            // 值减少
+ 189   3            if (Key_Number == 2)
+ 190   3            {
+ 191   4              if (menu == 1)
+ 192   4              {
+ 193   5                H_L = system_H % 10;
+ 194   5                H_H = system_H / 10;
+ 195   5                M_L = system_M % 10;
+ 196   5                M_H = system_M / 10;
+ 197   5                S_L = system_S % 10;
+ 198   5                S_H = system_S / 10;
+ 199   5                if (move == 1)
+ 200   5                {
+ 201   6                  H_H--;
+ 202   6                  if (H_H == -1)
+ 203   6                    H_H = 2;
+ 204   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 205   6                  // 设置光标位置
+ 206   6                  LCD_WriteCommand(0XC0);
+ 207   6                }
+ 208   5                if (move == 2)
+ 209   5                {
+ 210   6                  H_L--;
+ 211   6                  if (H_L == -1)
+ 212   6                    H_L = 3;
+ 213   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 214   6                  // 设置光标位置
+ 215   6                  LCD_WriteCommand(0XC1);
+ 216   6                }
+ 217   5                if (move == 4)
+ 218   5                {
+ 219   6                  M_H--;
+ 220   6                  if (M_H == -1)
+ 221   6                    M_H = 5;
+ 222   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 223   6                  // 设置光标位置
+ 224   6                  LCD_WriteCommand(0XC3);
+ 225   6                }
+ 226   5                if (move == 5)
+ 227   5                {
+ 228   6                  M_L--;
+ 229   6                  if (M_L == -1)
+ 230   6                    M_L = 9;
+ 231   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 232   6                  // 设置光标位置
+ 233   6                  LCD_WriteCommand(0XC4);
+ 234   6                }
+ 235   5                if (move == 7)
+ 236   5                {
+ 237   6                  S_H--;
+ 238   6                  if (S_H == -1)
+C51 COMPILER V9.57.0.0   SETUP                                                             05/24/2023 15:26:04 PAGE 5   
+
+ 239   6                    S_H = 5;
+ 240   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 241   6                  // 设置光标位置
+ 242   6                  LCD_WriteCommand(0XC6);
+ 243   6                }
+ 244   5                if (move == 8)
+ 245   5                {
+ 246   6                  S_L--;
+ 247   6                  if (S_L == -1)
+ 248   6                    S_L = 9;
+ 249   6                  set_system_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 250   6                  // 设置光标位置
+ 251   6                  LCD_WriteCommand(0XC7);
+ 252   6                }
+ 253   5              }
+ 254   4              else if (menu == 2)
+ 255   4              {
+ 256   5                H_L = alarm_H % 10;
+ 257   5                H_H = alarm_H / 10;
+ 258   5                M_L = alarm_M % 10;
+ 259   5                M_H = alarm_M / 10;
+ 260   5                S_L = alarm_S % 10;
+ 261   5                S_H = alarm_S / 10;
+ 262   5                if (move == 1)
+ 263   5                {
+ 264   6                  H_H--;
+ 265   6                  if (H_H == -1)
+ 266   6                    H_H = 2;
+ 267   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 268   6                  // 设置光标位置
+ 269   6                  LCD_WriteCommand(0XC0);
+ 270   6                }
+ 271   5                if (move == 2)
+ 272   5                {
+ 273   6                  H_L--;
+ 274   6                  if (H_L == -1)
+ 275   6                    H_L = 3;
+ 276   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 277   6                  // 设置光标位置
+ 278   6                  LCD_WriteCommand(0XC1);
+ 279   6                }
+ 280   5                if (move == 4)
+ 281   5                {
+ 282   6                  M_H--;
+ 283   6                  if (M_H == -1)
+ 284   6                    M_H = 5;
+ 285   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 286   6                  // 设置光标位置
+ 287   6                  LCD_WriteCommand(0XC3);
+ 288   6                }
+ 289   5                if (move == 5)
+ 290   5                {
+ 291   6                  M_L--;
+ 292   6                  if (M_L == -1)
+ 293   6                    M_L = 9;
+ 294   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 295   6                  // 设置光标位置
+ 296   6                  LCD_WriteCommand(0XC4);
+ 297   6                }
+ 298   5                if (move == 7)
+ 299   5                {
+ 300   6                  S_H--;
+C51 COMPILER V9.57.0.0   SETUP                                                             05/24/2023 15:26:04 PAGE 6   
+
+ 301   6                  if (S_H == -1)
+ 302   6                    S_H = 5;
+ 303   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 304   6                  // 设置光标位置
+ 305   6                  LCD_WriteCommand(0XC6);
+ 306   6                }
+ 307   5                if (move == 8)
+ 308   5                {
+ 309   6                  S_L--;
+ 310   6                  if (S_L == -1)
+ 311   6                    S_L = 9;
+ 312   6                  set_alarm_clock_time(H_H, H_L, M_H, M_L, S_H, S_L);
+ 313   6                  // 设置光标位置
+ 314   6                  LCD_WriteCommand(0XC7);
+ 315   6                }
+ 316   5              }
+ 317   4            }
+ 318   3            // 光标左移动
+ 319   3            if ((Key_Number == 3) && (move > 1))
+ 320   3            {
+ 321   4              LCD_WriteCommand(0X10);
+ 322   4              --move;
+ 323   4              if (move == 3 || move == 6)
+ 324   4              {
+ 325   5                --move;
+ 326   5                LCD_WriteCommand(0X10);
+ 327   5              }
+ 328   4            }
+ 329   3            // 光标右移
+ 330   3            else if ((Key_Number == 4) && (move < 8))
+ 331   3            {
+ 332   4              LCD_WriteCommand(0X14);
+ 333   4              ++move;
+ 334   4              if (move == 3 || move == 6)
+ 335   4              {
+ 336   5                ++move;
+ 337   5                LCD_WriteCommand(0X14);
+ 338   5              }
+ 339   4            }
+ 340   3            // 退出设置模式
+ 341   3            if (getMatrixKeyboardNum() == 2)
+ 342   3            {
+ 343   4              // LCD复位
+ 344   4              LCD_Init();
+ 345   4              break;
+ 346   4            }
+ 347   3          }
+ 348   2        }
+ 349   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1032    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

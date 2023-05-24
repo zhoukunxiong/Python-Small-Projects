@@ -1,0 +1,44 @@
+C51 COMPILER V9.57.0.0   GLOBALVARIABLE                                                    05/24/2023 15:11:33 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE GLOBALVARIABLE
+OBJECT MODULE PLACED IN .\Objects\GlobalVariable.obj
+COMPILER INVOKED BY: D:\Software\Keil_v5\C51\BIN\C51.EXE GlobalVariable.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PR
+                    -INT(.\Listings\GlobalVariable.lst) TABS(2) OBJECT(.\Objects\GlobalVariable.obj)
+
+line level    source
+
+   1          // 全局变量定义
+   2          
+   3          // 系统和闹钟时、分、秒
+   4          unsigned char system_H=11;
+   5          unsigned char system_M=11;
+   6          unsigned char system_S=11;
+   7          unsigned char alarm_H=21;
+   8          unsigned char alarm_M=11;
+   9          unsigned char alarm_S=11;
+  10          // 按键值
+  11          unsigned char Key_Number;
+  12          // 界面值
+  13          unsigned char menu=1;
+  14          
+  15          char H_H;
+  16          char H_L;
+  17          char M_H;
+  18          char M_L;
+  19          char S_H;
+  20          char S_L;
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
